@@ -18,10 +18,7 @@ public class Main {
 
         String medianFlights = "Медиана для полета между городами Владивостоком и Тель-Авив составляет - "
                 + medianOfFlights[medianOfFlights.length / 2] + " часов";
-        //System.out.println("\nСредняя цена на билеты составляет - " + averagePrice(objectsTickets));
         Arrays.sort(medianOfFlights);
-        //System.out.println("Медиана для полета между городами Владивостоком и Тель-Авив составляет - "
-        //        + medianOfFlights[medianOfFlights.length / 2] + " часов");
 
         try {
             FileWriter fw = new FileWriter(fileName);
@@ -43,7 +40,7 @@ public class Main {
         } catch (IOException e) {
             System.out.println("Ошибка при открытии файла!");
         }
-        
+
     }
 
     public static String readJson() {
