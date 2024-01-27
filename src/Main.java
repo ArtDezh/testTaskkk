@@ -1,18 +1,49 @@
+import java.awt.*;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.List;
 
 public class Main {
     static ArrayList<Ticket> objectsTickets = new ArrayList<>();
     static int[] medianOfFlights = new int[4];
 
     public static void main(String[] args) {
+        String fileName = "results.txt";
         minFlightTime(creatObjectsTickets(splitStrJson(readJson())));
-        System.out.println("\nСредняя цена на билеты составляет - " + averagePrice(objectsTickets));
+        String averagePrice = "\nСредняя цена на билеты составляет - " + averagePrice(objectsTickets);
+
+        String medianFlights = "Медиана для полета между городами Владивостоком и Тель-Авив составляет - "
+                + medianOfFlights[medianOfFlights.length / 2] + " часов";
+        //System.out.println("\nСредняя цена на билеты составляет - " + averagePrice(objectsTickets));
         Arrays.sort(medianOfFlights);
-        System.out.println("Медиана для полета между городами Владивостоком и Тель-Авив составляет - "
-                + medianOfFlights[medianOfFlights.length / 2] + " часов");
+        //System.out.println("Медиана для полета между городами Владивостоком и Тель-Авив составляет - "
+        //        + medianOfFlights[medianOfFlights.length / 2] + " часов");
+
+        try {
+            FileWriter fw = new FileWriter(fileName);
+            fw.write(averagePrice);
+            fw.write(System.lineSeparator());
+            fw.write(medianFlights);
+            fw.close();
+        } catch (IOException e) {
+            System.out.println("Ошибка записи в файл!!!");
+        }
+
+        try {
+            File file = new File(fileName);
+            if (Desktop.isDesktopSupported()) {
+                Desktop.getDesktop().open(file);
+            } else {
+                System.out.println("Файл не может быть открыт на вашей платформе!");
+            }
+        } catch (IOException e) {
+            System.out.println("Ошибка при открытии файла!");
+        }
+        
     }
 
     public static String readJson() {
