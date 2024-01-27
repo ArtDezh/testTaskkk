@@ -10,6 +10,7 @@ import java.util.List;
 public class Main {
     static ArrayList<Ticket> objectsTickets = new ArrayList<>();
     static int[] medianOfFlights = new int[4];
+    static String[] minTime = new String[4];
 
     public static void main(String[] args) {
         String fileName = "results.txt";
@@ -22,6 +23,10 @@ public class Main {
 
         try {
             FileWriter fw = new FileWriter(fileName);
+            for (String s : minTime) {
+                fw.write(s);
+                fw.write(System.lineSeparator());
+            }
             fw.write(averagePrice);
             fw.write(System.lineSeparator());
             fw.write(medianFlights);
@@ -102,6 +107,7 @@ public class Main {
         for (int j = 0; j < nameCarrier.length; j++) {
             int minHour = Integer.MAX_VALUE;
             int minMinutes = Integer.MAX_VALUE;
+            String tempStr = "";
             for (int i = 0; i < list.size(); i++) {
                 if (list.get(i).getCarrier().equals(nameCarrier[j])) {
                     String[] splitArrivTime = list.get(i).getArrival_time().split(":");
@@ -130,9 +136,10 @@ public class Main {
                     }
                 }
             }
-            System.out.println("\nМинимальное время полета между Владивостоком и Тель-Авив с авиокомпанией "
-                    + "\"" + nameCarrier[j] + "\"" + " составляет " + minHour + " часов " + minMinutes + " минут");
-
+            tempStr = "\nМинимальное время полета между Владивостоком и Тель-Авив с авиакомпанией "
+                    + "\"" + nameCarrier[j] + "\"" + " составляет " + minHour + " часов " + minMinutes + " минут";
+            System.out.println(tempStr);
+            minTime[j] = tempStr;
             medianOfFlights[j] = minHour;
         }
     }
