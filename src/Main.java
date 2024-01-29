@@ -9,17 +9,15 @@ import java.util.List;
 
 public class Main {
     static ArrayList<Ticket> objectsTickets = new ArrayList<>();
-    static int[] medianOfFlights = new int[4];
     static String[] minTime = new String[4];
 
     public static void main(String[] args) {
         String fileName = "results.txt";
         minFlightTime(creatObjectsTickets(splitStrJson(readJson())));
         String averagePrice = "\nСредняя цена на билеты составляет - " + averagePrice(objectsTickets);
-
-        String medianFlights = "Медиана для полета между городами Владивостоком и Тель-Авив составляет - "
-                + medianOfFlights[medianOfFlights.length / 2] + " часов";
-        Arrays.sort(medianOfFlights);
+        String priceDifference = "\nРазница между средней ценой и медианой для полета между городами составляет - "
+                + (averagePrice(objectsTickets) - medianPrice(objectsTickets));
+        String medianPrice = "\nМедиананная цена билетов составляет - " + medianPrice(objectsTickets);
 
         try {
             FileWriter fw = new FileWriter(fileName);
@@ -29,7 +27,9 @@ public class Main {
             }
             fw.write(averagePrice);
             fw.write(System.lineSeparator());
-            fw.write(medianFlights);
+            fw.write(medianPrice);
+            fw.write(System.lineSeparator());
+            fw.write(priceDifference);
             fw.close();
         } catch (IOException e) {
             System.out.println("Ошибка записи в файл!!!");
@@ -45,7 +45,6 @@ public class Main {
         } catch (IOException e) {
             System.out.println("Ошибка при открытии файла!");
         }
-
     }
 
     public static String readJson() {
@@ -140,7 +139,6 @@ public class Main {
                     + "\"" + nameCarrier[j] + "\"" + " составляет " + minHour + " часов " + minMinutes + " минут";
             System.out.println(tempStr);
             minTime[j] = tempStr;
-            medianOfFlights[j] = minHour;
         }
     }
 
@@ -150,5 +148,15 @@ public class Main {
             result += ticket.getPrice();
         }
         return result / list.size();
+    }
+
+    public static int medianPrice(List<Ticket> list) {
+        int[] arr = new int[list.size()];
+
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = list.get(i).getPrice();
+        }
+        Arrays.sort(arr);
+        return arr[arr.length / 2];
     }
 }
