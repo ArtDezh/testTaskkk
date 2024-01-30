@@ -156,7 +156,10 @@ public class Main {
         for (int i = 0; i < arr.length; i++) {
             arr[i] = list.get(i).getPrice();
         }
+
+        //System.out.println(Arrays.toString(arr));
         Arrays.sort(arr);
-        return arr[arr.length / 2];
+        //System.out.println(Arrays.toString(arr));
+        return arr[arr.length / 2 - 1];
     }
 }
