@@ -156,10 +156,12 @@ public class Main {
         for (int i = 0; i < arr.length; i++) {
             arr[i] = list.get(i).getPrice();
         }
-
         //System.out.println(Arrays.toString(arr));
         Arrays.sort(arr);
         //System.out.println(Arrays.toString(arr));
-        return arr[arr.length / 2 - 1];
+        if (arr.length % 2 == 0) {
+            return (arr[arr.length / 2 - 1] + arr[arr.length / 2]) / 2;
+        } else return arr[arr.length / 2];
+
     }
 }
